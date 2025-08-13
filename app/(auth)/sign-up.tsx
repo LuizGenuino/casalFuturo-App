@@ -19,15 +19,18 @@ import VerifyEmail from "./verify-email";
 
 export default function SignUpScreen() {
   const router = useRouter();
+  const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [pendingVerification, setPendingVerification] = useState(false);
 
   const handleSignUp = async () => {
-    if (!email || !password) return Alert.alert("Error", "Por favor preencha todos os campos");
+    if (!name|| !email || !password || !confirmPassword) return Alert.alert("Error", "Por favor preencha todos os campos");
     if (password.length < 6) return Alert.alert("Error", "A senha deve ter pelo menos 6 caracteres");
+    if (confirmPassword !== password) return Alert.alert("Error", "As senhas devem ser iguais");
 
     setLoading(true);
 
@@ -69,6 +72,19 @@ export default function SignUpScreen() {
           <Text style={authStyles.title}>Crie sua Conta</Text>
 
           <View style={authStyles.formContainer}>
+            {/* name Input */}
+            <View style={authStyles.inputContainer}>
+              <TextInput
+                style={authStyles.textInput}
+                placeholder="Digite seu Nome Completo"
+                placeholderTextColor={COLORS.textLight}
+                value={name}
+                onChangeText={setName}
+                keyboardType="default"
+                autoCapitalize="words"
+              />
+            </View>
+
             {/* Email Input */}
             <View style={authStyles.inputContainer}>
               <TextInput
@@ -90,6 +106,29 @@ export default function SignUpScreen() {
                 placeholderTextColor={COLORS.textLight}
                 value={password}
                 onChangeText={setPassword}
+                secureTextEntry={!showPassword}
+                autoCapitalize="none"
+              />
+              <TouchableOpacity
+                style={authStyles.eyeButton}
+                onPress={() => setShowPassword(!showPassword)}
+              >
+                <Ionicons
+                  name={showPassword ? "eye-outline" : "eye-off-outline"}
+                  size={20}
+                  color={COLORS.textLight}
+                />
+              </TouchableOpacity>
+            </View>
+  
+            {/* Confirm Password Input */}
+            <View style={authStyles.inputContainer}>
+              <TextInput
+                style={authStyles.textInput}
+                placeholder="Comfirme sua Senha"
+                placeholderTextColor={COLORS.textLight}
+                value={confirmPassword}
+                onChangeText={setConfirmPassword}
                 secureTextEntry={!showPassword}
                 autoCapitalize="none"
               />

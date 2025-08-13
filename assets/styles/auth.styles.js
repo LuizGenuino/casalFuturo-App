@@ -17,14 +17,14 @@ export const authStyles = StyleSheet.create({
     paddingTop: 40,
   },
   imageContainer: {
-    height: height * 0.3,
+    height: height * 0.24,
     marginBottom: 30,
     justifyContent: "center",
     alignItems: "center",
   },
   image: {
-    width: 320,
-    height: 320,
+    width: 260,
+    height: 260,
   },
   title: {
     fontSize: 20,
