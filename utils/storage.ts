@@ -38,7 +38,7 @@ export async function setToken(value: string) {
 export async function getToken() {
     try {
         const value = await AsyncStorage.getItem('CasalFuturo@Token');
-        return value != null ? JSON.parse(value) : null;
+        return value || null;
     } catch (error) {
         console.log("erro storage get token", error);
 

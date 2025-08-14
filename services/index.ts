@@ -27,7 +27,7 @@ class NetworkError extends Error {
 
 class ApiService {
     private readonly url: string;
-    private tokenCache: string | null = null;
+    private tokenCache: string | null | undefined = null;
 
     constructor(
         path: string,
@@ -100,11 +100,11 @@ class ApiService {
     }
 
     private async getToken(): Promise<string | null> {
-        if (this.tokenCache !== null) return this.tokenCache;
+        if (this.tokenCache !== null) return this.tokenCache || null;
 
         try {
             this.tokenCache = await getToken();
-            return this.tokenCache;
+            return this.tokenCache || null;
         } catch (err) {
             console.warn('Erro ao buscar token:', err);
             return null;
