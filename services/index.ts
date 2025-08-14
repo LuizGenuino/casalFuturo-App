@@ -8,7 +8,7 @@ enum HttpMethod {
     DELETE = 'DELETE'
 }
 
-const DEFAULT_BASE_URL = "http://192.168.2.141:3000/api/v1";
+const DEFAULT_BASE_URL = process.env.EXPO_PUBLIC_API_URL || "http://192.168.2.141:3000/api/v1";
 const REQUEST_TIMEOUT = 5000;
 
 class ApiError extends Error {
