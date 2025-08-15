@@ -15,6 +15,7 @@ import { Image } from "expo-image";
 import { COLORS } from "../../constants/Colors";
 import { AuthService } from "@/services";
 import { router } from "expo-router";
+import { parseMessage } from "@/utils/parseMessage";
 
 export default function VerifyEmail({ email, onBack }: any) {
     const [code, setCode] = useState("");
@@ -36,7 +37,8 @@ export default function VerifyEmail({ email, onBack }: any) {
                     onPress: () => router.push("/(auth)/sign-in" as any),
                 }])
         } catch (err: any) {
-            Alert.alert("Error", JSON.parse(err.message).message || "A verificação de Email falhou");
+            const msg = parseMessage(err.message);
+            Alert.alert("Error", msg || "A verificação de Email falhou");
             console.error(JSON.stringify(err, null, 2));
         } finally {
             setLoading(false);

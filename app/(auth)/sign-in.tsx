@@ -18,6 +18,7 @@ import { authStyles } from "../../assets/styles/auth.styles";
 import { COLORS } from "../../constants/Colors";
 import { AuthService } from "@/services";
 import { setToken, setUser } from "@/utils/storage";
+import { parseMessage } from "@/utils/parseMessage";
 
 export default function SignInScreen() {
     const router = useRouter();
@@ -27,6 +28,7 @@ export default function SignInScreen() {
     const [password, setPassword] = useState("");
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+
 
     const handleSignIn = async () => {
         if (!email || !password) {
@@ -50,7 +52,8 @@ export default function SignInScreen() {
             if (response.token) await setToken(response.token)
 
         } catch (err: any) {
-            Alert.alert("Error", JSON.parse(err.message).message || "Falha ao fazer login");
+            const msg = parseMessage(err.message);
+            Alert.alert("Error", msg || "Falha ao fazer login");
             console.error(JSON.stringify(err, null, 2));
         } finally {
             setLoading(false);

@@ -17,6 +17,7 @@ import { COLORS } from "../../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import VerifyEmail from "./verify-email";
 import { AuthService } from "@/services";
+import { parseMessage } from "@/utils/parseMessage";
 
 export default function SignUpScreen() {
     const router = useRouter();
@@ -45,7 +46,8 @@ export default function SignUpScreen() {
             console.log("response cadastro:", response);
             setPendingVerification(true);
         } catch (err: any) {
-            Alert.alert("Error", JSON.parse(err.message).message || "Falha ao criar conta");
+            const msg = parseMessage(err.message);
+            Alert.alert("Error", msg || "Falha ao criar conta");
             console.error(JSON.stringify(err, null, 2));
         } finally {
             setLoading(false);
